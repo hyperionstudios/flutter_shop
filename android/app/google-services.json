@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "920767503483",
+    "firebase_url": "https://fluttershop-8a243.firebaseio.com",
+    "project_id": "fluttershop-8a243",
+    "storage_bucket": "fluttershop-8a243.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920767503483:android:4be33886d1b02555",
+        "android_client_info": {
+          "package_name": "hyperionstudios.com.au.flutter_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920767503483-3k4gjp3ft3u2vh6coio82d5bb8mcar4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqmpcJhyneEKsHo4Oc7XuqaHdlXLGWQJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920767503483-3k4gjp3ft3u2vh6coio82d5bb8mcar4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "920767503483-1j49moqk969hl3do7ibmrsnurjpfihcr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hyperionstudios.com.au.flutterShop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

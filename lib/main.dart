@@ -1,70 +1,102 @@
 import 'package:flutter/material.dart';
 import 'authentication/authentication_controller.dart';
+import 'authentication/firebase_auth.dart';
 
+void main() {
+  runApp(FlutterShop());
+}
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class FlutterShop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: AuthTest(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-
-  final String title;
-
+class AuthTest extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AuthTestState createState() => _AuthTestState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _AuthTestState extends State<AuthTest> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
+  FirebaseAuthentication firebaseAuthentication = FirebaseAuthentication();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+
+    firebaseAuthentication.getCurrentUser();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Auth Test'),
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.only(left: 24, right: 24),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Login'),
+              SizedBox(
+                height: 16,
+              ),
+              TextFormField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(hintText: 'Email'),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              RaisedButton(
+                child: Text('Login'),
+                onPressed: () async {
+                  String email = _emailController.text;
+                  String password = _passwordController.text;
 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+                  var user = await firebaseAuthentication.sigIn(email, password);
+                  print(user);
+                },
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              RaisedButton(
+                child: Text('SignOUt'),
+                onPressed: () async {
+                  firebaseAuthentication.signOut();
+                },
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
