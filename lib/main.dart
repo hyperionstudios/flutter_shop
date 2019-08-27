@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'authentication/authentication_controller.dart';
-import 'authentication/firebase_auth.dart';
+import 'package:flutter/material.dart' as prefix0;
+import 'admin/categories.dart';
+import 'admin/add_category.dart';
+import 'admin/add_product.dart';
+import 'admin/products.dart';
+
 
 void main() {
   runApp(FlutterShop());
@@ -11,6 +15,15 @@ class FlutterShop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: AuthTest(),
+      theme: ThemeData(
+        primaryColor: Colors.teal
+      ),
+      routes: {
+        '/add_category' : ( context ) => AddCategoryScreen(),
+        '/categories'   : ( context ) => AllCategories(),
+        '/add_product'  : ( context ) => AddProduct(),
+        '/products'     : ( context ) => AllProducts(),
+      },
     );
   }
 }
@@ -21,80 +34,52 @@ class AuthTest extends StatefulWidget {
 }
 
 class _AuthTestState extends State<AuthTest> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
-  FirebaseAuthentication firebaseAuthentication = FirebaseAuthentication();
 
   @override
   void initState() {
     super.initState();
-
-    firebaseAuthentication.getCurrentUser();
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Auth Test'),
+        title: Text('Flutter Shop'),
       ),
-      body: Container(
-        padding: EdgeInsets.only(left: 24, right: 24),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Login'),
-              SizedBox(
-                height: 16,
-              ),
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(hintText: 'Email'),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              RaisedButton(
-                child: Text('Login'),
-                onPressed: () async {
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
-
-                  var user = await firebaseAuthentication.sigIn(email, password);
-                  print(user);
-                },
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              RaisedButton(
-                child: Text('SignOUt'),
-                onPressed: () async {
-                  firebaseAuthentication.signOut();
-                },
-              ),
-            ],
-          ),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            ListTile(
+              title: Text('All Products'),
+              onTap: (){
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/products');
+              },
+            ),
+            ListTile(
+              title: Text('Add Product'),
+              onTap: (){
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/add_product');
+              },
+            ),
+            ListTile(
+              title: Text('All Categories'),
+              onTap: (){
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/categories');
+              },
+            ),
+            ListTile(
+              title: Text('Add Category'),
+              onTap: (){
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/add_category');
+              },
+            ),
+          ],
         ),
       ),
     );
