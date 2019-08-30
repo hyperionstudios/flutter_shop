@@ -32,6 +32,14 @@ class _AllProductsState extends State<AllProducts> {
               return ListTile(
                 title: Text(document['product_title']),
                 subtitle: Text(document['product_price']),
+                trailing: ( document['images'] != null ) ? SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: Image(
+                    image: NetworkImage( document['images'][0] ),
+                    fit: BoxFit.cover,
+                  ),
+                ) : SizedBox(height: 0,width: 0,),
               );
             }).toList(),
             );
